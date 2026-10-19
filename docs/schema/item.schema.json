@@ -1,0 +1,347 @@
+{
+  "$defs": {
+    "DocVersion": {
+      "additionalProperties": false,
+      "properties": {
+        "cover": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cover"
+        },
+        "filename": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Filename"
+        }
+      },
+      "title": "DocVersion",
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "description": "원문 위치. cols는 열 문자 목록(중복 없음) 또는 None",
+      "properties": {
+        "cols": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cols"
+        },
+        "file": {
+          "minLength": 1,
+          "title": "File",
+          "type": "string"
+        },
+        "rows": {
+          "$ref": "#/$defs/RowRange"
+        },
+        "sheet": {
+          "minLength": 1,
+          "title": "Sheet",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "sheet",
+        "rows"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "MergedField": {
+      "additionalProperties": false,
+      "description": "병합 시작 칸에서 받은 값 (시작 칸이 항목 행 밖일 때만). source_row는 병합 시작 행",
+      "properties": {
+        "header": {
+          "title": "Header",
+          "type": "string"
+        },
+        "source_row": {
+          "minimum": 1,
+          "title": "Source Row",
+          "type": "integer"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "header",
+        "value",
+        "source_row"
+      ],
+      "title": "MergedField",
+      "type": "object"
+    },
+    "PathPart": {
+      "additionalProperties": false,
+      "description": "분류 경로의 한 단계. value는 basis가 empty일 때만 None",
+      "properties": {
+        "basis": {
+          "enum": [
+            "sheet_name",
+            "cell",
+            "merge_restored",
+            "filled_down",
+            "split_cell",
+            "numbering",
+            "empty",
+            "form_filled",
+            "table_title"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "level": {
+          "minimum": 1,
+          "title": "Level",
+          "type": "integer"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "level",
+        "value",
+        "basis"
+      ],
+      "title": "PathPart",
+      "type": "object"
+    },
+    "RawField": {
+      "additionalProperties": false,
+      "description": "원문 칸 값 (헤더는 합친 헤더 글자)",
+      "properties": {
+        "header": {
+          "title": "Header",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "header",
+        "value"
+      ],
+      "title": "RawField",
+      "type": "object"
+    },
+    "RowRange": {
+      "additionalProperties": false,
+      "description": "행 범위. Location과 ChunkSource가 같이 쓴다.",
+      "properties": {
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "RowRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "category_path": {
+      "items": {
+        "$ref": "#/$defs/PathPart"
+      },
+      "title": "Category Path",
+      "type": "array"
+    },
+    "category_path_text": {
+      "title": "Category Path Text",
+      "type": "string"
+    },
+    "doc_file": {
+      "minLength": 1,
+      "title": "Doc File",
+      "type": "string"
+    },
+    "doc_type": {
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "title": "Doc Type",
+      "type": "string"
+    },
+    "doc_version": {
+      "$ref": "#/$defs/DocVersion"
+    },
+    "item_id": {
+      "pattern": "^IT-\\d{6}$",
+      "title": "Item Id",
+      "type": "string"
+    },
+    "locations": {
+      "items": {
+        "$ref": "#/$defs/Location"
+      },
+      "minItems": 1,
+      "title": "Locations",
+      "type": "array"
+    },
+    "merged_fields": {
+      "patternProperties": {
+        "^[A-Z]{1,3}$": {
+          "$ref": "#/$defs/MergedField"
+        }
+      },
+      "title": "Merged Fields",
+      "type": "object"
+    },
+    "profile_source": {
+      "enum": [
+        "auto",
+        "approved"
+      ],
+      "title": "Profile Source",
+      "type": "string"
+    },
+    "raw_fields": {
+      "patternProperties": {
+        "^[A-Z]{1,3}$": {
+          "$ref": "#/$defs/RawField"
+        }
+      },
+      "title": "Raw Fields",
+      "type": "object"
+    },
+    "ref_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Ref Ids",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.4",
+      "pattern": "^1\\.\\d+$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Id"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "not_written",
+        "unparsed",
+        "ambiguous"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "title": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Title"
+    }
+  },
+  "required": [
+    "item_id",
+    "doc_type",
+    "doc_file",
+    "category_path",
+    "category_path_text",
+    "locations",
+    "doc_version",
+    "status",
+    "profile_source"
+  ],
+  "title": "Item",
+  "type": "object"
+}

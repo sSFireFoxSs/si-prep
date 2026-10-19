@@ -1,0 +1,49 @@
+project: shop
+approved: true
+input_dir: ../../generated        # 이 파일 기준 → tests/fixtures/generated
+glossary: glossary.yaml
+doc_priority: [req, fo, policy]   # 사람이 확인해 준 우선순위(앞이 우선). 적지 않은 종류는 「나머지」
+
+doc_types:
+  - {id: req,    name: 요구사항}
+  - {id: fo,     name: 기능}
+  - {id: bo,     name: 관리자 기능}
+  - {id: policy, name: 정책}
+  - {id: test,   name: 테스트}
+  - {id: variation, name: 변형}   # 표 모양·경고 시나리오 모음. 연결 규칙 없음
+
+documents:                      # 이 순서 → 파일 순서 → 시트 → 행 순서로 IT- 번호가 붙는다
+  - {doc_type: req,    profile: profiles/req.yaml,    files: [가상몰_요구사항정의서.xlsx]}
+  - {doc_type: fo,     profile: profiles/fo.yaml,     files: [가상몰_기능정의서_v1.2.xlsx]}
+  - {doc_type: bo,     profile: profiles/bo.yaml,     files: [가상몰_관리자기능정의서.xlsx]}
+  - {doc_type: policy, profile: profiles/policy.yaml, files: [가상몰_정책정의서.xlsx]}
+  - {doc_type: test,   profile: profiles/test.yaml,   files: [가상몰_테스트케이스.xlsx]}
+  - {doc_type: variation, profile: profiles/variation.yaml,
+     files: [가상몰_변형.xlsx, 가상몰_옛형식.xls, 가상몰_가짜확장자.xlsx]}   # .xls·가짜 확장자는 unsupported 확인용
+
+link_rules:                     # 연결에는 방향이 없다. docs 순서는 의미 없고, sheets만 docs와 같은 순서로 맞춘다
+  - id: fo_overview_detail      # 같은 문서 안: 요약 시트 ↔ 메뉴 시트, 설명이 다르면 경고
+    docs: [fo, fo]
+    key: path
+    sheets: [overview, detail]
+    check_content: true
+  - id: fo_test                 # 테스트 파일의 FO 시트만
+    docs: [fo, test]
+    key: path
+    sheets: [detail, [테스트케이스]]
+  - id: bo_test                 # 테스트 파일의 BO 시트만
+    docs: [bo, test]
+    key: path
+    sheets: [null, [BO테스트케이스]]
+  - id: policy_fo               # 정책 시트 이름 "주문 - 결제" ↔ 기능 묶음 "주문 › 결제"
+    docs: [policy, fo]          # 찾는 쪽 = root_separators가 있는 policy 프로필
+    key: sheet_to_path
+    sheets: [["* - *"], null]   # 목록형 정책 시트(이름에 " - " 없음)는 연결 대상에서 뺀다. 항목은 그대로 만든다
+  - id: test_req                # 테스트의 요구사항 ID 열 ↔ 요구사항 자기 ID
+    docs: [test, req]           # 찾는 쪽 = ref_ids 열이 있는 test 프로필
+    key: id_ref
+  - id: req_fo_glossary         # 요구사항 "고객 › 로그인" ↔ (고객=회원) ↔ 기능 묶음 "회원 › 로그인"
+    docs: [req, fo]
+    key: glossary
+    group: fo                   # prefix면 필수: 묶음이 되는 쪽(대상 쪽)
+    options: {match: prefix}

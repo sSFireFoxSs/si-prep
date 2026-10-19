@@ -1,0 +1,16 @@
+id: req
+approved: true
+sheets:                         # 엑셀의 모든 시트. 기본 읽음, 뺌은 이유 필수
+  - {name: 요구사항}
+header_rows: [1]
+data_start_row: 2
+id_pattern: "REQ-\\d{3}"
+columns:
+  id: {header_contains: 요구사항 ID}
+  hierarchy:
+    - {header_contains: 대분류}
+    - {header_contains: 중분류}
+  title: {header_contains: 요구사항명}
+  description: {header_contains: 설명}
+hierarchy: {method: columns}
+item_boundary: {method: row}

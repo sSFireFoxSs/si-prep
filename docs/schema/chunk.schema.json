@@ -1,0 +1,88 @@
+{
+  "$defs": {
+    "ChunkSource": {
+      "additionalProperties": false,
+      "description": "청크의 출처. cols 없음 (rag_core 계약)",
+      "properties": {
+        "file": {
+          "minLength": 1,
+          "title": "File",
+          "type": "string"
+        },
+        "rows": {
+          "$ref": "#/$defs/RowRange"
+        },
+        "sheet": {
+          "minLength": 1,
+          "title": "Sheet",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "sheet",
+        "rows"
+      ],
+      "title": "ChunkSource",
+      "type": "object"
+    },
+    "RowRange": {
+      "additionalProperties": false,
+      "description": "행 범위. Location과 ChunkSource가 같이 쓴다.",
+      "properties": {
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "RowRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "검색용 청크. si-prep은 B1만 만들고, B0는 rag_core가 만들어 이 모델로 검증한다.",
+  "properties": {
+    "chunk_id": {
+      "title": "Chunk Id",
+      "type": "string"
+    },
+    "meta": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Meta",
+      "type": "object"
+    },
+    "schema_version": {
+      "default": "1.4",
+      "pattern": "^1\\.\\d+$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/ChunkSource"
+    },
+    "text": {
+      "minLength": 1,
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "chunk_id",
+    "text",
+    "source"
+  ],
+  "title": "Chunk",
+  "type": "object"
+}

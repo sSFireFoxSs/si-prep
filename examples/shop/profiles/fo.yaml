@@ -1,0 +1,47 @@
+id: fo
+approved: true
+sheets:                         # 엑셀의 모든 시트. 기본 읽음, 뺌은 이유 필수
+  - {name: 표지, read: false, reason: 메타 시트(표지)}
+  - {name: 개정이력, read: false, reason: 메타 시트(개정이력)}
+  - {name: 회원}
+  - {name: 주문}
+  - {name: 고객센터}
+  - {name: 요약}
+header_rows: [4, 5]
+data_start_row: 6
+stop_markers: ["※"]
+columns:
+  hierarchy:
+    - {header_contains: 1단계}
+    - {header_contains: 2단계}
+    - {header_contains: 3단계}
+  title: {header_contains: 기능명}
+  description: {header_contains: 설명}
+hierarchy: {method: columns}
+item_boundary: {method: row}
+sheet_as_root: true
+overview_sheets: [요약]
+version:
+  cover_sheet: 표지
+  label_pattern: "버전|Version"
+  filename_pattern: "_v(\\d+(?:\\.\\d+)*)"
+sheet_overrides:
+  - sheets: [고객센터]          # 분류 4단계 (NO.·비고 열은 역할 없음)
+    columns:
+      hierarchy:
+        - {header_contains: 1단계}
+        - {header_contains: 2단계}
+        - {header_contains: 3단계}
+        - {header_contains: 4단계}
+      title: {header_contains: 기능명}
+      description: {header_contains: 설명}
+  - sheets: [요약]              # 요약 시트는 시트 이름 대신 "메뉴" 열이 1단계
+    sheet_as_root: false
+    columns:
+      hierarchy:
+        - {header_contains: 메뉴}
+        - {header_contains: 1단계}
+        - {header_contains: 2단계}
+        - {header_contains: 3단계}
+      title: {header_contains: 기능명}
+      description: {header_contains: 설명}

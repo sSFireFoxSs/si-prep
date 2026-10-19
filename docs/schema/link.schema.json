@@ -1,0 +1,233 @@
+{
+  "$defs": {
+    "GroupRef": {
+      "additionalProperties": false,
+      "description": "묶음 = 그 문서 종류에서 이 경로로 (단계 단위로) 시작하는 항목들.\nsheets(1.2): 묶음을 그 시트들의 항목으로 제한(규칙 sheets 칸을 실제 시트 이름으로 푼 것). 없으면 전체",
+      "properties": {
+        "category_path_text": {
+          "minLength": 1,
+          "title": "Category Path Text",
+          "type": "string"
+        },
+        "doc_type": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Doc Type",
+          "type": "string"
+        },
+        "sheets": {
+          "anyOf": [
+            {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheets"
+        }
+      },
+      "required": [
+        "doc_type",
+        "category_path_text"
+      ],
+      "title": "GroupRef",
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "description": "원문 위치. cols는 열 문자 목록(중복 없음) 또는 None",
+      "properties": {
+        "cols": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cols"
+        },
+        "file": {
+          "minLength": 1,
+          "title": "File",
+          "type": "string"
+        },
+        "rows": {
+          "$ref": "#/$defs/RowRange"
+        },
+        "sheet": {
+          "minLength": 1,
+          "title": "Sheet",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "sheet",
+        "rows"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "RowRange": {
+      "additionalProperties": false,
+      "description": "행 범위. Location과 ChunkSource가 같이 쓴다.",
+      "properties": {
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "RowRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "방향 없는 연결. 항목↔항목(item_a·item_b, item_a < item_b) 또는 항목↔묶음(item·group) 중 한 모양",
+  "properties": {
+    "evidence_locations": {
+      "items": {
+        "$ref": "#/$defs/Location"
+      },
+      "minItems": 1,
+      "title": "Evidence Locations",
+      "type": "array"
+    },
+    "evidence_text": {
+      "minLength": 1,
+      "title": "Evidence Text",
+      "type": "string"
+    },
+    "grade": {
+      "enum": [
+        "explicit",
+        "structural",
+        "inferred"
+      ],
+      "title": "Grade",
+      "type": "string"
+    },
+    "group": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GroupRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "item": {
+      "anyOf": [
+        {
+          "pattern": "^IT-\\d{6}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Item"
+    },
+    "item_a": {
+      "anyOf": [
+        {
+          "pattern": "^IT-\\d{6}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Item A"
+    },
+    "item_b": {
+      "anyOf": [
+        {
+          "pattern": "^IT-\\d{6}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Item B"
+    },
+    "link_id": {
+      "pattern": "^LK-\\d{6}$",
+      "title": "Link Id",
+      "type": "string"
+    },
+    "method": {
+      "enum": [
+        "id_ref",
+        "path_exact",
+        "path_normalized",
+        "glossary",
+        "name_similarity"
+      ],
+      "title": "Method",
+      "type": "string"
+    },
+    "needs_review": {
+      "title": "Needs Review",
+      "type": "boolean"
+    },
+    "profile_source": {
+      "enum": [
+        "auto",
+        "approved"
+      ],
+      "title": "Profile Source",
+      "type": "string"
+    },
+    "rule_id": {
+      "minLength": 1,
+      "title": "Rule Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.4",
+      "pattern": "^1\\.\\d+$",
+      "title": "Schema Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "link_id",
+    "grade",
+    "method",
+    "rule_id",
+    "evidence_text",
+    "evidence_locations",
+    "needs_review",
+    "profile_source"
+  ],
+  "title": "Link",
+  "type": "object"
+}

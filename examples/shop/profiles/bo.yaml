@@ -1,0 +1,17 @@
+id: bo
+approved: true
+sheets:                         # 엑셀의 모든 시트. 기본 읽음, 뺌은 이유 필수
+  - {name: 회원관리}
+  - {name: 주문관리}
+header_rows: [4, 5]
+data_start_row: 6
+columns:
+  hierarchy:
+    - {header_contains: 1단계}
+    - {header_contains: 2단계}
+    - {header_contains: 3단계}
+  title: {header_contains: 기능명}
+  description: {header_contains: 설명}
+hierarchy: {method: columns}
+item_boundary: {method: row}
+sheet_as_root: false              # 1단계 열에 메뉴 이름이 있으므로 시트 이름은 경로에 쓰지 않음

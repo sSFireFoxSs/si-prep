@@ -1,0 +1,90 @@
+id: variation
+approved: true
+sheets:                         # 엑셀의 모든 시트. 기본 읽음, 뺌은 이유 필수
+  - {name: 빈칸채움}
+  - {name: 빈칸채움_끔}
+  - {name: 한칸경로}
+  - {name: 번호}
+  - {name: 이어지는행}
+  - {name: 오른쪽메모}
+  - {name: 역할겹침}
+  - {name: 숨김}
+  - {name: 표두개}
+  - {name: 들여쓰기}
+  - {name: 숨김행수식}
+  - {name: 숨김건너뜀}
+  - {name: 내용병합}
+  - {name: 분류패턴_2단}
+  - {name: 분류패턴_3단}
+  - {name: 분류열부족}
+  - {name: 각주}
+  - {name: 부푼범위}
+  - {name: 표안빈열}
+  - {name: 대각선표}
+  - {name: 왼쪽덩어리}
+  - {name: 차트}
+  - {name: 빈시트}
+  - {name: 표여러개}
+header_rows: [1]
+data_start_row: 2
+columns:
+  hierarchy:
+    - {header_pattern: "^분류\\d$", all: true}   # 분류패턴_2단·3단은 덮어쓰기 없이 이것으로
+  title: {header_contains: 기능명}
+  description: {header_contains: 설명}
+hierarchy: {method: columns}
+item_boundary: {method: row}
+sheet_overrides:
+  - sheets: [빈칸채움]
+    hierarchy: {method: columns, fill_down: true}
+  - sheets: [한칸경로]
+    columns:
+      hierarchy:
+        - {header_contains: 경로}
+      title: {header_contains: 기능명}
+      description: {header_contains: 설명}
+    hierarchy: {method: split_cell, separators: [" > "]}
+  - sheets: [번호]
+    columns:
+      hierarchy:
+        - {header_contains: 번호}
+      title: {header_contains: 이름}
+      description: {header_contains: 설명}
+    hierarchy: {method: numbering}
+  - sheets: [이어지는행]
+    id_pattern: "V-\\d{3}"
+    columns:
+      id: {header_contains: 기능 ID}
+      hierarchy:
+        - {header_pattern: "^분류\\d$", all: true}
+      title: {header_contains: 기능명}
+      description: {header_contains: 설명}
+    item_boundary: {method: continuation}      # key_role 기본값 id
+  - sheets: [들여쓰기]
+    columns:
+      hierarchy:
+        - {header_contains: 기능 구조}
+      description: {header_contains: 설명}
+    hierarchy: {method: indent}               # 알려졌지만 미구현 → unsupported
+  - sheets: [숨김건너뜀]
+    hidden_rows: skip
+  - sheets: [분류열부족]
+    columns:
+      hierarchy:                              # 분류3 머리글이 없어 header_not_found
+        - {header_contains: 분류1}
+        - {header_contains: 분류2}
+        - {header_contains: 분류3}
+      title: {header_contains: 기능명}
+      description: {header_contains: 설명}
+  - sheets: [표여러개]                        # 한 시트에 표 여러 개: 제목 행 + 「번호」 머리글
+    stop_markers: ["※"]
+    columns:
+      hierarchy:
+        - {header_contains: 분류1}
+      title: {header_contains: 기능명}
+      description: {header_contains: 설명}
+    hierarchy: {method: columns, fill_down: true}
+    tables:
+      title_row: {only_columns: [A]}
+      header_row: {offset: 1, col: A, pattern: '^번호$'}
+      title_to: path

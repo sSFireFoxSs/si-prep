@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "description": "용어 사전: 한 묶음 안의 말은 같은 것으로 본다. 첫 번째가 대표어",
+  "properties": {
+    "approved": {
+      "default": false,
+      "title": "Approved",
+      "type": "boolean"
+    },
+    "groups": {
+      "items": {
+        "items": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Groups",
+      "type": "array"
+    }
+  },
+  "required": [
+    "groups"
+  ],
+  "title": "Glossary",
+  "type": "object"
+}

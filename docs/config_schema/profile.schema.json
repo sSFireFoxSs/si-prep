@@ -1,0 +1,984 @@
+{
+  "$defs": {
+    "Columns": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "exclude_from_text": {
+          "items": {
+            "$ref": "#/$defs/Selector"
+          },
+          "title": "Exclude From Text",
+          "type": "array"
+        },
+        "hierarchy": {
+          "items": {
+            "$ref": "#/$defs/Selector"
+          },
+          "title": "Hierarchy",
+          "type": "array"
+        },
+        "id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ref_ids": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RefIdsSelector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "title": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Selector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Columns",
+      "type": "object"
+    },
+    "ColumnsMethod": {
+      "additionalProperties": false,
+      "properties": {
+        "blank_means_above": {
+          "default": false,
+          "title": "Blank Means Above",
+          "type": "boolean"
+        },
+        "border_groups": {
+          "default": false,
+          "title": "Border Groups",
+          "type": "boolean"
+        },
+        "fill_down": {
+          "default": false,
+          "title": "Fill Down",
+          "type": "boolean"
+        },
+        "method": {
+          "const": "columns",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "ColumnsMethod",
+      "type": "object"
+    },
+    "ContinuationBoundary": {
+      "additionalProperties": false,
+      "properties": {
+        "key_role": {
+          "default": "id",
+          "enum": [
+            "id",
+            "hierarchy"
+          ],
+          "title": "Key Role",
+          "type": "string"
+        },
+        "method": {
+          "const": "continuation",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "ContinuationBoundary",
+      "type": "object"
+    },
+    "IndentMethod": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "indent",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "IndentMethod",
+      "type": "object"
+    },
+    "MergedBlockBoundary": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "merged_block",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "MergedBlockBoundary",
+      "type": "object"
+    },
+    "NoneMethod": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "none",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "NoneMethod",
+      "type": "object"
+    },
+    "NumberingMethod": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "numbering",
+          "title": "Method",
+          "type": "string"
+        },
+        "number_pattern": {
+          "default": "^\\d+(\\.\\d+)*$",
+          "minLength": 1,
+          "title": "Number Pattern",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "NumberingMethod",
+      "type": "object"
+    },
+    "ParentIdMethod": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "parent_id",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "ParentIdMethod",
+      "type": "object"
+    },
+    "RefIdsSelector": {
+      "additionalProperties": false,
+      "description": "참조 ID 열: 선택자 + 칸에서 ID를 찾을 정규식",
+      "properties": {
+        "all": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "All"
+        },
+        "col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Col"
+        },
+        "expand_short": {
+          "default": false,
+          "title": "Expand Short",
+          "type": "boolean"
+        },
+        "header_contains": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Contains"
+        },
+        "header_pattern": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Pattern"
+        },
+        "pattern": {
+          "minLength": 1,
+          "title": "Pattern",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pattern"
+      ],
+      "title": "RefIdsSelector",
+      "type": "object"
+    },
+    "RowBoundary": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "row",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "RowBoundary",
+      "type": "object"
+    },
+    "Selector": {
+      "additionalProperties": false,
+      "description": "열 선택자: header_contains / col / header_pattern(+all: true, hierarchy 전용) 중 정확히 하나",
+      "properties": {
+        "all": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "All"
+        },
+        "col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Col"
+        },
+        "header_contains": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Contains"
+        },
+        "header_pattern": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Pattern"
+        }
+      },
+      "title": "Selector",
+      "type": "object"
+    },
+    "SheetEntry": {
+      "additionalProperties": false,
+      "description": "시트 한 줄: name은 시트 이름 또는 *·? 패턴, read 기본 true(읽음). 뺌(read: false)이면 reason 필수",
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "read": {
+          "default": true,
+          "title": "Read",
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "SheetEntry",
+      "type": "object"
+    },
+    "SheetOverride": {
+      "additionalProperties": false,
+      "properties": {
+        "columns": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Columns"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "data_start_row": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Data Start Row"
+        },
+        "header_rows": {
+          "anyOf": [
+            {
+              "items": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Header Rows"
+        },
+        "hidden_rows": {
+          "anyOf": [
+            {
+              "enum": [
+                "include",
+                "skip"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hidden Rows"
+        },
+        "hierarchy": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "columns": "#/$defs/ColumnsMethod",
+                  "indent": "#/$defs/IndentMethod",
+                  "none": "#/$defs/NoneMethod",
+                  "numbering": "#/$defs/NumberingMethod",
+                  "parent_id": "#/$defs/ParentIdMethod",
+                  "split_cell": "#/$defs/SplitCellMethod"
+                },
+                "propertyName": "method"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/ColumnsMethod"
+                },
+                {
+                  "$ref": "#/$defs/SplitCellMethod"
+                },
+                {
+                  "$ref": "#/$defs/NumberingMethod"
+                },
+                {
+                  "$ref": "#/$defs/NoneMethod"
+                },
+                {
+                  "$ref": "#/$defs/IndentMethod"
+                },
+                {
+                  "$ref": "#/$defs/ParentIdMethod"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hierarchy"
+        },
+        "id_pattern": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Id Pattern"
+        },
+        "item_boundary": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "continuation": "#/$defs/ContinuationBoundary",
+                  "merged_block": "#/$defs/MergedBlockBoundary",
+                  "row": "#/$defs/RowBoundary"
+                },
+                "propertyName": "method"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/RowBoundary"
+                },
+                {
+                  "$ref": "#/$defs/ContinuationBoundary"
+                },
+                {
+                  "$ref": "#/$defs/MergedBlockBoundary"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Item Boundary"
+        },
+        "root_separators": {
+          "anyOf": [
+            {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Root Separators"
+        },
+        "sheet_as_root": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheet As Root"
+        },
+        "sheets": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Sheets",
+          "type": "array"
+        },
+        "stop_markers": {
+          "anyOf": [
+            {
+              "items": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stop Markers"
+        },
+        "table_gap_rows": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Table Gap Rows"
+        },
+        "tables": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Tables"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "sheets"
+      ],
+      "title": "SheetOverride",
+      "type": "object"
+    },
+    "SplitCellMethod": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "const": "split_cell",
+          "title": "Method",
+          "type": "string"
+        },
+        "separators": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Separators",
+          "type": "array"
+        }
+      },
+      "required": [
+        "method",
+        "separators"
+      ],
+      "title": "SplitCellMethod",
+      "type": "object"
+    },
+    "TableHeaderRow": {
+      "additionalProperties": false,
+      "description": "표 머리글 신호: 제목 행 + offset 행의 col 칸 원문 값이 pattern(정규식, search)에 맞음.\nrows: 표마다 머리글 줄 수 — fixed(기본)는 프로필 header_rows의 줄 수, merge는 신호 칸의 세로 병합 높이\n(병합 없음·가로 병합만이면 1줄, 4줄을 넘으면 그 표만 건너뜀)",
+      "properties": {
+        "col": {
+          "pattern": "^[A-Z]{1,3}$",
+          "title": "Col",
+          "type": "string"
+        },
+        "offset": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "pattern": {
+          "minLength": 1,
+          "title": "Pattern",
+          "type": "string"
+        },
+        "rows": {
+          "default": "fixed",
+          "enum": [
+            "fixed",
+            "merge"
+          ],
+          "title": "Rows",
+          "type": "string"
+        }
+      },
+      "required": [
+        "col",
+        "pattern"
+      ],
+      "title": "TableHeaderRow",
+      "type": "object"
+    },
+    "TableTitleRow": {
+      "additionalProperties": false,
+      "description": "표 제목 행 신호: 원문 값(병합 복원 전)이 이 열들에만 있는 행",
+      "properties": {
+        "only_columns": {
+          "items": {
+            "pattern": "^[A-Z]{1,3}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Only Columns",
+          "type": "array"
+        }
+      },
+      "required": [
+        "only_columns"
+      ],
+      "title": "TableTitleRow",
+      "type": "object"
+    },
+    "Tables": {
+      "additionalProperties": false,
+      "description": "한 시트에 표 여러 개: 제목 행 신호 + 머리글 신호가 둘 다 맞는 행에서 표가 시작된다.\n머리글 줄 수는 header_row.rows(기본 fixed = header_rows의 줄 수), 데이터는 머리글 다음 행부터 다음 표 제목 앞까지(stop_markers는 표마다).\ntitle_to: path면 제목을 경로 단계(table_title)로, none이면 넣지 않음.\nfirst_without_title: true면 첫 제목 표보다 위, 위쪽 행이 모두 빈(또는 시트 맨 위) 머리글 신호 행부터 「제목 없는 표」\n하나를 읽는다(경로에 제목 단계 없음)",
+      "properties": {
+        "first_without_title": {
+          "default": false,
+          "title": "First Without Title",
+          "type": "boolean"
+        },
+        "header_row": {
+          "$ref": "#/$defs/TableHeaderRow"
+        },
+        "title_row": {
+          "$ref": "#/$defs/TableTitleRow"
+        },
+        "title_to": {
+          "default": "path",
+          "enum": [
+            "path",
+            "none"
+          ],
+          "title": "Title To",
+          "type": "string"
+        }
+      },
+      "required": [
+        "title_row",
+        "header_row"
+      ],
+      "title": "Tables",
+      "type": "object"
+    },
+    "VersionSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "cover_sheet": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cover Sheet"
+        },
+        "filename_pattern": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Filename Pattern"
+        },
+        "label_pattern": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label Pattern"
+        }
+      },
+      "title": "VersionSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "approved": {
+      "default": false,
+      "title": "Approved",
+      "type": "boolean"
+    },
+    "columns": {
+      "$ref": "#/$defs/Columns"
+    },
+    "data_start_row": {
+      "minimum": 1,
+      "title": "Data Start Row",
+      "type": "integer"
+    },
+    "header_rows": {
+      "items": {
+        "minimum": 1,
+        "type": "integer"
+      },
+      "minItems": 1,
+      "title": "Header Rows",
+      "type": "array"
+    },
+    "hidden_rows": {
+      "default": "include",
+      "enum": [
+        "include",
+        "skip"
+      ],
+      "title": "Hidden Rows",
+      "type": "string"
+    },
+    "hierarchy": {
+      "discriminator": {
+        "mapping": {
+          "columns": "#/$defs/ColumnsMethod",
+          "indent": "#/$defs/IndentMethod",
+          "none": "#/$defs/NoneMethod",
+          "numbering": "#/$defs/NumberingMethod",
+          "parent_id": "#/$defs/ParentIdMethod",
+          "split_cell": "#/$defs/SplitCellMethod"
+        },
+        "propertyName": "method"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ColumnsMethod"
+        },
+        {
+          "$ref": "#/$defs/SplitCellMethod"
+        },
+        {
+          "$ref": "#/$defs/NumberingMethod"
+        },
+        {
+          "$ref": "#/$defs/NoneMethod"
+        },
+        {
+          "$ref": "#/$defs/IndentMethod"
+        },
+        {
+          "$ref": "#/$defs/ParentIdMethod"
+        }
+      ],
+      "title": "Hierarchy"
+    },
+    "id": {
+      "minLength": 1,
+      "title": "Id",
+      "type": "string"
+    },
+    "id_pattern": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Id Pattern"
+    },
+    "item_boundary": {
+      "discriminator": {
+        "mapping": {
+          "continuation": "#/$defs/ContinuationBoundary",
+          "merged_block": "#/$defs/MergedBlockBoundary",
+          "row": "#/$defs/RowBoundary"
+        },
+        "propertyName": "method"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RowBoundary"
+        },
+        {
+          "$ref": "#/$defs/ContinuationBoundary"
+        },
+        {
+          "$ref": "#/$defs/MergedBlockBoundary"
+        }
+      ],
+      "title": "Item Boundary"
+    },
+    "overview_sheets": {
+      "anyOf": [
+        {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Overview Sheets"
+    },
+    "root_separators": {
+      "anyOf": [
+        {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Root Separators"
+    },
+    "sheet_as_root": {
+      "default": false,
+      "title": "Sheet As Root",
+      "type": "boolean"
+    },
+    "sheet_overrides": {
+      "items": {
+        "$ref": "#/$defs/SheetOverride"
+      },
+      "title": "Sheet Overrides",
+      "type": "array"
+    },
+    "sheets": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/SheetEntry"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sheets"
+    },
+    "stop_markers": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Stop Markers",
+      "type": "array"
+    },
+    "table_gap_rows": {
+      "default": 2,
+      "minimum": 1,
+      "title": "Table Gap Rows",
+      "type": "integer"
+    },
+    "tables": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Tables"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "version": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/VersionSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "id",
+    "header_rows",
+    "data_start_row",
+    "columns",
+    "hierarchy",
+    "item_boundary"
+  ],
+  "title": "Profile",
+  "type": "object"
+}

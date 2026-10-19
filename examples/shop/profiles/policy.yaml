@@ -1,0 +1,28 @@
+id: policy
+approved: true
+sheets:                         # 엑셀의 모든 시트. 기본 읽음, 뺌은 이유 필수
+  - {name: 주문 - 결제}
+  - {name: 회원 - 로그인}
+  - {name: 쿠폰 - 발급}
+  - {name: 주문 - 배송}
+  - {name: 결제 수단 목록}
+header_rows: [1]
+data_start_row: 2
+columns:
+  title: {header_contains: 정책명}
+  description: {header_contains: 정책 설명}
+hierarchy: {method: none}          # 분류 열 없음. 시트 이름이 경로
+item_boundary: {method: row}
+sheet_as_root: true
+root_separators: [" - "]           # "주문 - 결제" → 주문 › 결제
+sheet_overrides:
+  - sheets: [주문 - 배송]           # 서술형: 2단 구분(머리글 병합이라 두 열 글자가 같음 → 열 문자로) + 정책 내용
+    columns:
+      hierarchy:
+        - {col: B}
+        - {col: C}
+      description: {header_contains: 정책 내용}
+    hierarchy: {method: columns}
+  - sheets: [결제 수단 목록]        # 목록형: 머리글 모양이 다른 표, 분류 열 없음
+    columns:
+      title: {header_contains: 수단 이름}

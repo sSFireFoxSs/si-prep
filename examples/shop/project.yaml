@@ -1,0 +1,31 @@
+# 예시 프로젝트: 합성 「가상몰」 문서 5종 (실제 회사·실무 데이터 아님)
+# 엑셀은 저장소에 없고, 아래 명령으로 만든다:
+#   python tests/fixtures/make_fixtures.py
+# 테스트용 설정(tests/fixtures/configs/shop)에서 일부러 깨진 「변형」 문서만 뺀 사본이다.
+project: shop-example
+approved: true
+input_dir: ../../tests/fixtures/generated
+glossary: glossary.yaml
+doc_priority: [req, fo, policy]
+
+doc_types:
+  - {id: req,    name: 요구사항}
+  - {id: fo,     name: 기능}
+  - {id: bo,     name: 관리자 기능}
+  - {id: policy, name: 정책}
+  - {id: test,   name: 테스트}
+
+documents:
+  - {doc_type: req,    profile: profiles/req.yaml,    files: [가상몰_요구사항정의서.xlsx]}
+  - {doc_type: fo,     profile: profiles/fo.yaml,     files: [가상몰_기능정의서_v1.2.xlsx]}
+  - {doc_type: bo,     profile: profiles/bo.yaml,     files: [가상몰_관리자기능정의서.xlsx]}
+  - {doc_type: policy, profile: profiles/policy.yaml, files: [가상몰_정책정의서.xlsx]}
+  - {doc_type: test,   profile: profiles/test.yaml,   files: [가상몰_테스트케이스.xlsx]}
+
+link_rules:
+  - {id: fo_overview_detail, docs: [fo, fo], key: path, sheets: [overview, detail], check_content: true}
+  - {id: fo_test,   docs: [fo, test],   key: path, sheets: [detail, [테스트케이스]]}
+  - {id: bo_test,   docs: [bo, test],   key: path, sheets: [null, [BO테스트케이스]]}
+  - {id: policy_fo, docs: [policy, fo], key: sheet_to_path, sheets: [["* - *"], null]}
+  - {id: test_req,  docs: [test, req],  key: id_ref}
+  - {id: req_fo_glossary, docs: [req, fo], key: glossary, group: fo, options: {match: prefix}}

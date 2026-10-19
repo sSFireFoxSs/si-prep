@@ -1,0 +1,214 @@
+{
+  "$defs": {
+    "DocTypeDecl": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z][a-z0-9_]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "title": "DocTypeDecl",
+      "type": "object"
+    },
+    "DocumentEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "doc_type": {
+          "minLength": 1,
+          "title": "Doc Type",
+          "type": "string"
+        },
+        "files": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Files",
+          "type": "array"
+        },
+        "profile": {
+          "minLength": 1,
+          "title": "Profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "doc_type",
+        "profile",
+        "files"
+      ],
+      "title": "DocumentEntry",
+      "type": "object"
+    },
+    "LinkRule": {
+      "additionalProperties": false,
+      "properties": {
+        "check_content": {
+          "default": false,
+          "title": "Check Content",
+          "type": "boolean"
+        },
+        "docs": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Docs",
+          "type": "array"
+        },
+        "group": {
+          "anyOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Group"
+        },
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "key": {
+          "enum": [
+            "path",
+            "sheet_to_path",
+            "path_prefix",
+            "id_ref",
+            "glossary",
+            "name_similarity"
+          ],
+          "title": "Key",
+          "type": "string"
+        },
+        "options": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Options"
+        },
+        "sheets": {
+          "anyOf": [
+            {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sheets"
+        }
+      },
+      "required": [
+        "id",
+        "docs",
+        "key"
+      ],
+      "title": "LinkRule",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "approved": {
+      "default": false,
+      "title": "Approved",
+      "type": "boolean"
+    },
+    "doc_priority": {
+      "anyOf": [
+        {
+          "items": {},
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Doc Priority"
+    },
+    "doc_types": {
+      "items": {
+        "$ref": "#/$defs/DocTypeDecl"
+      },
+      "minItems": 1,
+      "title": "Doc Types",
+      "type": "array"
+    },
+    "documents": {
+      "items": {
+        "$ref": "#/$defs/DocumentEntry"
+      },
+      "minItems": 1,
+      "title": "Documents",
+      "type": "array"
+    },
+    "glossary": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Glossary"
+    },
+    "input_dir": {
+      "minLength": 1,
+      "title": "Input Dir",
+      "type": "string"
+    },
+    "link_rules": {
+      "items": {
+        "$ref": "#/$defs/LinkRule"
+      },
+      "title": "Link Rules",
+      "type": "array"
+    },
+    "project": {
+      "minLength": 1,
+      "title": "Project",
+      "type": "string"
+    }
+  },
+  "required": [
+    "project",
+    "input_dir",
+    "doc_types",
+    "documents"
+  ],
+  "title": "ProjectConfig",
+  "type": "object"
+}

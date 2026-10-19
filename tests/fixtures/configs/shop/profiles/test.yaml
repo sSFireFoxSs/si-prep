@@ -1,0 +1,25 @@
+id: test
+approved: true
+sheets:                         # 엑셀의 모든 시트. 기본 읽음, 뺌은 이유 필수
+  - {name: 테스트케이스}
+  - {name: BO테스트케이스}
+header_rows: [1]
+data_start_row: 2
+id_pattern: "TC-\\d{3}"
+columns:
+  id: {header_contains: 케이스 ID}
+  ref_ids: {header_contains: 요구사항 ID, pattern: "REQ-\\d{3}"}   # 한 칸에 여러 개면 모두 찾음
+  hierarchy:
+    - {header_contains: 메뉴}
+    - {header_contains: 1단계}
+    - {header_contains: 2단계}
+    - {header_contains: 3단계}
+  title: {header_contains: 테스트명}
+  description: {header_contains: 기대결과}
+  exclude_from_text:               # 청크 본문에서 뺄 열 (담당자·담당자별 수행 결과)
+    - {header_contains: 수행자}
+    - {header_contains: 결과(검수자1)}
+    - {header_contains: 결과(검수자2)}
+    - {header_contains: 결과(검수자3)}
+hierarchy: {method: columns}
+item_boundary: {method: row}

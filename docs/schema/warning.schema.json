@@ -1,0 +1,155 @@
+{
+  "$defs": {
+    "Location": {
+      "additionalProperties": false,
+      "description": "원문 위치. cols는 열 문자 목록(중복 없음) 또는 None",
+      "properties": {
+        "cols": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cols"
+        },
+        "file": {
+          "minLength": 1,
+          "title": "File",
+          "type": "string"
+        },
+        "rows": {
+          "$ref": "#/$defs/RowRange"
+        },
+        "sheet": {
+          "minLength": 1,
+          "title": "Sheet",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file",
+        "sheet",
+        "rows"
+      ],
+      "title": "Location",
+      "type": "object"
+    },
+    "RowRange": {
+      "additionalProperties": false,
+      "description": "행 범위. Location과 ChunkSource가 같이 쓴다.",
+      "properties": {
+        "end": {
+          "minimum": 1,
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "minimum": 1,
+          "title": "Start",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "title": "RowRange",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "경고. 행 위치가 없는 파일·시트 단위 경고는 locations가 비고 file(·sheet)을 쓴다",
+  "properties": {
+    "file": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "File"
+    },
+    "item_ids": {
+      "items": {
+        "pattern": "^IT-\\d{6}$",
+        "type": "string"
+      },
+      "title": "Item Ids",
+      "type": "array"
+    },
+    "kind": {
+      "enum": [
+        "content_mismatch",
+        "unparsed",
+        "unsupported",
+        "unsupported_layout",
+        "merge_unrestored",
+        "link_unconfirmed",
+        "version_mismatch",
+        "sheet_skipped",
+        "hidden_content",
+        "header_not_found",
+        "duplicate_id",
+        "ref_unresolved",
+        "formula_no_value",
+        "read_failed"
+      ],
+      "title": "Kind",
+      "type": "string"
+    },
+    "locations": {
+      "items": {
+        "$ref": "#/$defs/Location"
+      },
+      "title": "Locations",
+      "type": "array"
+    },
+    "message": {
+      "minLength": 1,
+      "title": "Message",
+      "type": "string"
+    },
+    "schema_version": {
+      "default": "1.4",
+      "pattern": "^1\\.\\d+$",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sheet": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sheet"
+    },
+    "warning_id": {
+      "pattern": "^WN-\\d{6}$",
+      "title": "Warning Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "warning_id",
+    "kind",
+    "message"
+  ],
+  "title": "Warning",
+  "type": "object"
+}

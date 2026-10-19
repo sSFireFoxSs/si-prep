@@ -1,0 +1,52 @@
+# 실제 업무 문서(마스킹본 포함)와 실행 결과 - 절대 올리지 않음
+data/raw/
+out/
+
+# 실제 프로젝트 설정 - 실제 시트·열 이름이 들어가므로 올리지 않음 (합성 예시는 tests/fixtures/configs/)
+configs/private/
+
+# 엑셀 파일은 어디에 있든 올리지 않음
+# (테스트용 합성 엑셀은 tests/fixtures/make_fixtures.py로 다시 만든다)
+*.xlsx
+*.xlsm
+*.xls
+~$*
+
+# 다른 업무 문서 형식도 어디에 있든 올리지 않음 (꼭 올려야 하면 git add -f로 하나씩)
+*.csv
+*.docx
+*.doc
+*.pptx
+*.ppt
+*.pdf
+*.hwp
+*.hwpx
+
+# 비밀값
+.env
+
+# 파이썬 / 가상환경
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# 외부 참고 소스 (읽기 전용 clone)
+refs/
+
+# 검색 평가용 벡터 DB
+chroma_db/
+
+# 개인 로컬 설정
+.claude
+
+# OS
+Thumbs.db
+.DS_Store
+CLAUDE.md
+
+docs/intake/*
+!docs/intake/README.md
