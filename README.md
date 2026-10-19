@@ -222,6 +222,10 @@ python -m si_prep --project examples/shop/project.yaml --out out/shop-example
 | `project.yaml` (프로젝트당 하나) | 문서 종류와 파일 목록, 연결 규칙, 용어 사전, 문서 우선순위 |
 | 프로필 (문서 종류마다 하나) | 읽을 시트, 머리글 행, 분류 · ID · 제목 · 설명 열(머리글 글자로 찾음), 항목 경계, 빈칸 처리 |
 
+![에이전트가 새 문서를 받아 진단, 설정 초안, 시험 실행, 사람 확인, 공식 실행까지 하는 흐름 (합성 데이터 재연)](docs/images/demo-agent.gif)
+
+*위 화면은 실제 진행 순서를 합성 예시로 다시 그린 재연이에요. 질문 · 승인은 사람이 하고, 처리 자체는 si-prep이 LLM 없이 해요.*
+
 예시는 `examples/shop/`에 있어요. 처음 보는 문서를 받을 때 따르는 순서(진단 → 설정 초안 → 설정 검사 → 시험 실행 → 보고서 보고 고치기 → 사람 승인 → 공식 실행)는 [docs/intake/README.md](docs/intake/README.md)에 있어요.
 
 ```bash
