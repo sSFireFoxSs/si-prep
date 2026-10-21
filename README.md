@@ -12,6 +12,16 @@
   <img src="https://img.shields.io/badge/status-beta-yellow" alt="status">
 </p>
 
+<p align="center">
+  <a href="#5-30초-실행-합성-예시-데이터">빠르게 시작하기</a> ·
+  <a href="#6-출력-예시">출력 예시</a> ·
+  <a href="#7-내-문서에-쓰기">내 문서에 쓰기</a> ·
+  <a href="#9-평가-품질을-판단한-기준과-사례">평가 결과</a> ·
+  <a href="#10-한계">한계</a> ·
+  <a href="docs/DESIGN.md">설계 문서</a> ·
+  <a href="https://github.com/joonki24/rag-core">rag-core</a>
+</p>
+
 **SI 프로젝트 엑셀 산출물을 RAG에 넣기 좋은 데이터로 바꾸는 전처리 도구**
 
 > **베타(v0.1.0)예요.** 합성 예시와 팀 프로젝트 문서로 검증했지만, 지원하는 양식이 아직 일부예요(10장 「한계」). 설정 형식과 출력 스키마는 0.x 동안 바뀔 수 있어요. 바뀌면 `docs/schema/CHANGELOG.md`에 적어요.
